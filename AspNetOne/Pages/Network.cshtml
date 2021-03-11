@@ -1,0 +1,167 @@
+﻿@page
+@model AspNetOne.Pages.NetworkModel
+@{
+    ViewData["Title"] = "Network";
+}
+@using System.Net.NetworkInformation;
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingZero">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+                    Network Information
+                </button>
+            </h5>
+        </div>
+        <div id="collapseZero" class="collapse show" aria-labelledby="headingZero" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover">
+                    <tbody>
+                        <tr>
+                            <th>DomainName</th>
+                            <td>@IPGlobalProperties.GetIPGlobalProperties().DomainName</td>
+                            <th>HostName</th>
+                            <td>@IPGlobalProperties.GetIPGlobalProperties().HostName</td>
+                        </tr>
+                        <tr>
+                            <th>NodeType</th>
+                            <td>@IPGlobalProperties.GetIPGlobalProperties().NodeType</td>
+                            <th></th>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    Network Interfaces <span class="badge badge-light">@NetworkInterface.GetAllNetworkInterfaces().Count()</span>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Description</th>
+                            <th>NetworkInterfaceType</th>
+                            <th>PhysicalAddress</th>
+                            <th>SupportsMulticast</th>
+                            <th>OperationalStatus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var networkAdapter in NetworkInterface.GetAllNetworkInterfaces())
+                        {
+                            <tr>
+                                <td>@networkAdapter.Description</td>
+                                <td>@networkAdapter.NetworkInterfaceType</td>
+                                <td>@networkAdapter.GetPhysicalAddress().ToString()</td>
+                                <td>@networkAdapter.SupportsMulticast</td>
+                                <td>@networkAdapter.OperationalStatus</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Tcp Listeners <span class="badge badge-light">@IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners().Count()</span>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Address</th>
+                            <th>Port</th>
+                            <th>AddressFamily</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners())
+                        {
+                            <tr>
+                                <td>@item.Address</td>
+                                <td>@item.Port</td>
+                                <td>@item.AddressFamily</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Query <span class="badge badge-light">@IPGlobalProperties.GetIPGlobalProperties().GetActiveUdpListeners().Count()</span>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Address</th>
+                            <th>Port</th>
+                            <th>AddressFamily</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @IPGlobalProperties.GetIPGlobalProperties().GetActiveUdpListeners())
+                        {
+                            <tr>
+                                <td>@item.Address</td>
+                                <td>@item.Port</td>
+                                <td>@item.AddressFamily</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingFour">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Unicast Addresses <span class="badge badge-light">@IPGlobalProperties.GetIPGlobalProperties().GetUnicastAddresses().Count</span>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Address</th>
+                            <th>IPv4Mask</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @IPGlobalProperties.GetIPGlobalProperties().GetUnicastAddresses())
+                        {
+                            <tr>
+                                <td>@item.Address</td>
+                                <td>@item.IPv4Mask</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

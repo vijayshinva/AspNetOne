@@ -1,0 +1,248 @@
+﻿@page
+@model AspNetOne.Pages.ProcessModel
+@{
+    ViewData["Title"] = "Process";
+}
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingZero">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseZero" aria-expanded="false" aria-controls="collapseZero">
+                    Process
+                </button>
+            </h5>
+        </div>
+        <div id="collapseZero" class="collapse" aria-labelledby="headingZero" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover text-break">
+                    <tbody>
+                        <tr>
+                            <th>BasePriority</th>
+                            <td>@Model.Process.BasePriority</td>
+                            <th>HandleCount</th>
+                            <td>@Model.Process.HandleCount</td>
+                        </tr>
+                        <tr>
+                            <th>Id</th>
+                            <td>@Model.Process.Id</td>
+                            <th>MachineName</th>
+                            <td>@Model.Process.MachineName</td>
+                        </tr>
+                        <tr>
+                            <th>MainModule.FileName</th>
+                            <td>@Model.Process.MainModule?.FileName</td>
+                            <th>MainModule.ModuleMemorySize</th>
+                            <td>@Model.Process.MainModule?.ModuleMemorySize</td>
+                        </tr>
+                        <tr>
+                            <td class="w-auto small" colspan="4">@Model.Process.MainModule?.FileVersionInfo</td>
+                        </tr>
+                        <tr>
+                            <th>MainWindowTitle</th>
+                            <td>@Model.Process.MainWindowTitle</td>
+                            <th>CurrentDirectory</th>
+                            <td>@Environment.CurrentDirectory</td>
+                        </tr>
+                        <tr>
+                            <th>MaxWorkingSet</th>
+                            <td>@Model.Process.MaxWorkingSet</td>
+                            <th>MinWorkingSet</th>
+                            <td>@Model.Process.MinWorkingSet</td>
+                        </tr>
+                        <tr>
+                            <th>NonpagedSystemMemorySize64</th>
+                            <td>@Model.Process.NonpagedSystemMemorySize64</td>
+                            <th>PagedMemorySize64</th>
+                            <td>@Model.Process.PagedMemorySize64</td>
+                        </tr>
+                        <tr>
+                            <th>PagedSystemMemorySize64</th>
+                            <td>@Model.Process.PagedSystemMemorySize64</td>
+                            <th>PeakPagedMemorySize64</th>
+                            <td>@Model.Process.PeakPagedMemorySize64</td>
+                        </tr>
+                        <tr>
+                            <th>PeakVirtualMemorySize64</th>
+                            <td>@Model.Process.PeakVirtualMemorySize64</td>
+                            <th>PeakWorkingSet64</th>
+                            <td>@Model.Process.PeakWorkingSet64</td>
+                        </tr>
+                        <tr>
+                            <th>PriorityBoostEnabled</th>
+                            <td>@Model.Process.PriorityBoostEnabled</td>
+                            <th>PriorityClass</th>
+                            <td>@Model.Process.PriorityClass</td>
+                        </tr>
+                        <tr>
+                            <th>PrivateMemorySize64</th>
+                            <td>@Model.Process.PrivateMemorySize64</td>
+                            <th>PrivilegedProcessorTime</th>
+                            <td>@Model.Process.PrivilegedProcessorTime</td>
+                        </tr>
+                        <tr>
+                            <th>ProcessName</th>
+                            <td>@Model.Process.ProcessName</td>
+                            <th>SessionId</th>
+                            <td>@Model.Process.SessionId</td>
+                        </tr>
+                        <tr>
+                            <th>StartTime</th>
+                            <td>@Model.Process.StartTime</td>
+                            <th>Thread Count</th>
+                            <td>@Model.Process.Threads.Count</td>
+                        </tr>
+                        <tr>
+                            <th>TotalProcessorTime</th>
+                            <td>@Model.Process.TotalProcessorTime</td>
+                            <th>UserProcessorTime</th>
+                            <td>@Model.Process.UserProcessorTime</td>
+                        </tr>
+                        <tr>
+                            <th>VirtualMemorySize64</th>
+                            <td>@Model.Process.VirtualMemorySize64</td>
+                            <th>WorkingSet64</th>
+                            <td>@Model.Process.WorkingSet64</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="accordion-sub">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Modules <span class="badge badge-light">@Model.Process.Modules.Count</span>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion-sub">
+                            <div class="card-body">
+                                <table class="table table-sm table-hover w-auto small text-break">
+                                    <tbody>
+                                        @foreach (System.Diagnostics.ProcessModule item in Model.Process.Modules)
+                                        {
+                                            <tr>
+                                                <th>@item.ModuleName<span class="badge badge-light">ModuleMemorySize: @item.ModuleMemorySize</span></th>
+                                                @{
+                                                    try
+                                                    {
+                                                        <td>@item.FileVersionInfo</td>
+                                                    }
+                                                    catch
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Threads <span class="badge badge-light">@Model.Process.Threads.Count</span>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion-sub">
+                            <div class="card-body">
+                                <table class="table table-sm table-hover w-auto small">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>StartTime</th>
+                                            <th>CurrentPriority</th>
+                                            <th>PriorityBoostEnabled</th>
+                                            <th>PriorityLevel</th>
+                                            <th>PrivilegedProcessorTime</th>
+                                            <th>TotalProcessorTime</th>
+                                            <th>UserProcessorTime</th>
+                                            <th>ThreadState</th>
+                                            <th>WaitReason</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (System.Diagnostics.ProcessThread item in Model.Process.Threads)
+                                        {
+                                            <tr>
+                                                <td>@item.Id</td>
+                                                <td>@item.StartTime</td>
+                                                <td>@item.CurrentPriority</td>
+                                                <td>@item.PriorityBoostEnabled</td>
+                                                <td>@item.PriorityLevel</td>
+                                                <td>@item.PrivilegedProcessorTime</td>
+                                                <td>@item.TotalProcessorTime</td>
+                                                <td>@item.UserProcessorTime</td>
+                                                <td>@item.ThreadState</td>
+                                                @try
+                                                {
+                                                    <td>@item.WaitReason</td>
+                                                }
+                                                catch (Exception)
+                                                {
+                                                    <td></td>
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                    Processes <span class="badge badge-light">@System.Diagnostics.Process.GetProcesses().Count()</span>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover w-auto text-break">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ProcessName</th>
+                            <th>Id</th>
+                            <th>SessionId</th>
+                            <th>BasePriority</th>
+                            <th>HandleCount</th>
+                            <th>MainModule.FileName</th>
+                            <th>VirtualMemorySize64</th>
+                            <th>WorkingSet64</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var process in System.Diagnostics.Process.GetProcesses())
+                        {
+                            <tr>
+                                <td>@process.ProcessName</td>
+                                <td>@process.Id</td>
+                                <td>@process.SessionId</td>
+                                <td>@process.BasePriority</td>
+                                <td>@process.HandleCount</td>
+                                @try
+                                {
+                                    <td>@process.MainModule.FileName</td>
+                                }
+                                catch (Exception)
+                                {
+                                    <td></td>
+                                }
+                                <td>@process.VirtualMemorySize64</td>
+                                <td>@process.WorkingSet64</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

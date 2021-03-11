@@ -1,0 +1,179 @@
+﻿@page
+@model AspNetOne.Pages.HttpModel
+@{
+    ViewData["Title"] = "HTTP";
+}
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingZero">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+                    HTTP Information
+                </button>
+            </h5>
+        </div>
+        <div id="collapseZero" class="collapse show" aria-labelledby="headingZero" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover">
+                    <tbody>
+                        <tr>
+                            <th>Method</th>
+                            <td>@Request.Method</td>
+                            <th>Host</th>
+                            <td>@Request.Host</td>
+                        </tr>
+                        <tr>
+                            <th>Protocol</th>
+                            <td>@Request.Protocol</td>
+                            <th>Path</th>
+                            <td>@Request.Path</td>
+                        </tr>
+                        <tr>
+                            <th>IsHttps</th>
+                            <td>@Request.IsHttps</td>
+                            <th>PathBase</th>
+                            <td>@Request.PathBase</td>
+                        </tr>
+                        <tr>
+                            <th>ContentType</th>
+                            <td>@Request.ContentType</td>
+                            <th>ContentLength</th>
+                            <td>@Request.ContentLength</td>
+                        </tr>
+                        <tr>
+                            <th>Scheme</th>
+                            <td>@Request.Scheme</td>
+                            <th>HasFormContentType</th>
+                            <td>@Request.HasFormContentType</td>
+                        </tr>
+                        <tr>
+                            <th>QueryString</th>
+                            <td>@Request.QueryString</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    Headers <span class="badge badge-light">@Request.Headers.Count</span>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Header</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Request.Headers)
+                        {
+                            <tr>
+                                <td>@item.Key</td>
+                                <td>@item.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Cookies <span class="badge badge-light">@Request.Cookies.Count</span>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Header</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Request.Cookies)
+                        {
+                            <tr>
+                                <td>@item.Key</td>
+                                <td>@item.Value</td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Query <span class="badge badge-light">@Request.Query.Count</span>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Query</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Request.Query)
+                        {
+                            <tr>
+                                <td>@item.Key</td>
+                                <td>@item.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingFour">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    RouteValues <span class="badge badge-light">@Request.RouteValues.Count</span>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Route</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Request.RouteValues)
+                        {
+                            <tr>
+                                <td>@item.Key</td>
+                                <td>@item.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

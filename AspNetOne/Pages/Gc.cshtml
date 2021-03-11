@@ -1,0 +1,109 @@
+﻿@page
+@model AspNetOne.Pages.GcModel
+@{
+    ViewData["Title"] = "GC";
+}
+<h4>Garbage Collector</h4>
+<table class="table table-sm table-hover">
+    <tbody>
+        <tr>
+            <th>MaxGeneration</th>
+            <td>@GC.MaxGeneration</td>
+            <th>CommandLine</th>
+            <td></td>
+        </tr>
+        <tr>
+            <th>GetTotalAllocatedBytes</th>
+            <td>@GC.GetTotalAllocatedBytes(true)</td>
+            <th>GetTotalMemory</th>
+            <td>@GC.GetTotalMemory(false)</td>
+        </tr>
+        @{
+            var gcMemoryInfo = GC.GetGCMemoryInfo();
+        }
+        <tr>
+            <th>Compacted</th>
+            <td>@gcMemoryInfo.Compacted</td>
+            <th>Concurrent</th>
+            <td>@gcMemoryInfo.Concurrent</td>
+        </tr>
+        <tr>
+            <th>FinalizationPendingCount</th>
+            <td>@gcMemoryInfo.FinalizationPendingCount</td>
+            <th>FragmentedBytes</th>
+            <td>@gcMemoryInfo.FragmentedBytes</td>
+        </tr>
+        <tr>
+            <th>Generation</th>
+            <td>@gcMemoryInfo.Generation</td>
+            <th>HeapSizeBytes</th>
+            <td>@gcMemoryInfo.HeapSizeBytes</td>
+        </tr>
+        <tr>
+            <th>HighMemoryLoadThresholdBytes</th>
+            <td>@gcMemoryInfo.HighMemoryLoadThresholdBytes</td>
+            <th>Index</th>
+            <td>@gcMemoryInfo.Index</td>
+        </tr>
+        <tr>
+            <th>MemoryLoadBytes</th>
+            <td>@gcMemoryInfo.MemoryLoadBytes</td>
+            <th>PauseTimePercentage</th>
+            <td>@gcMemoryInfo.PauseTimePercentage</td>
+        </tr>
+        <tr>
+            <th>PinnedObjectsCount</th>
+            <td>@gcMemoryInfo.PinnedObjectsCount</td>
+            <th>PromotedBytes</th>
+            <td>@gcMemoryInfo.PromotedBytes</td>
+        </tr>
+        <tr>
+            <th>TotalAvailableMemoryBytes</th>
+            <td>@gcMemoryInfo.TotalAvailableMemoryBytes</td>
+            <th>TotalCommittedBytes</th>
+            <td>@gcMemoryInfo.TotalCommittedBytes</td>
+        </tr>
+    </tbody>
+</table>
+<h4>Generation Information</h4>
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th>Generation</th>
+            <th>FragmentationAfterBytes</th>
+            <th>FragmentationBeforeBytes</th>
+            <th>SizeAfterBytes</th>
+            <th>SizeBeforeBytes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < gcMemoryInfo.GenerationInfo.Length; i++)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@gcMemoryInfo.GenerationInfo[i].FragmentationAfterBytes</td>
+                <td>@gcMemoryInfo.GenerationInfo[i].FragmentationBeforeBytes</td>
+                <td>@gcMemoryInfo.GenerationInfo[i].SizeAfterBytes</td>
+                <td>@gcMemoryInfo.GenerationInfo[i].SizeBeforeBytes</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h4>Pause Durations</h4>
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>PauseDurations</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < gcMemoryInfo.PauseDurations.Length; i++)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@gcMemoryInfo.PauseDurations[i]</td>
+            </tr>
+        }
+    </tbody>
+</table>

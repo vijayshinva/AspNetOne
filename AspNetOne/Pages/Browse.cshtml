@@ -1,0 +1,26 @@
+﻿@page
+@model AspNetOne.Pages.BrowseModel
+@{
+    ViewData["Title"] = "Browse";
+}
+
+<div class="container">
+    <h4>@Model.Path</h4>
+    <ul>
+        @foreach (var item in Model.FileSystemInfos)
+        {
+            if (item is System.IO.DirectoryInfo)
+            {
+                <li>
+                    <a asp-area="" asp-controller="Browse" asp-action="Index" asp-route-path="@item.FullName.Trim()" class="badge badge-primary">@item.FullName</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <span class="badge badge-light">@item.FullName</span>
+                </li>
+            }
+        }
+    </ul>
+</div>
